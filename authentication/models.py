@@ -11,6 +11,12 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
+
+        try:
+            del kwargs['confirm_password']
+            del kwargs['groups']
+        except:
+            pass
         email = self.normalize_email(email)
         user = self.model(email=email, **kwargs)
         user.set_password(password)
